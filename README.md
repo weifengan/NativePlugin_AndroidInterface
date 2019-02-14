@@ -1,0 +1,2 @@
+# NativePlugin_AndroidInterface
+android interface
