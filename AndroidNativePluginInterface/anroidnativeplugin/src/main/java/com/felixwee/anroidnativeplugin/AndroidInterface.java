@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.unity3d.player.UnityPlayer;
 import com.unity3d.player.UnityPlayerActivity;
 
+import java.util.HashMap;
+
 public class AndroidInterface {
 
     private  Context context=null;
@@ -18,15 +20,37 @@ public class AndroidInterface {
     }
 
     private  static  AndroidInterface _instance=null;
-    public static  AndroidInterface GetInstance(){
+
+    public static  AndroidInterface getUnityInstance(){
         if(_instance==null){
             //获取主Activity的Context
             Context ct=UnityPlayer.currentActivity.getApplicationContext();
             _instance=new AndroidInterface(ct);
+            Log.d("Unity","AndroidInterface initialized for Unity3D!");
         }
-        Log.d("Unity","初始化AndroidInterface ok");
         return _instance;
     }
+
+    public static  AndroidInterface getAndroidInstance(Context appContext){
+        if(_instance==null){
+            _instance=new AndroidInterface(appContext);
+        }
+        Log.d("Android","AndroidInterface initialized for Android!");
+        return _instance;
+    }
+
+    /**
+     *  获取AppUtils工具类
+     */
+    private  AppUtils _appUtils=null;
+    public  AppUtils getAppUtils(){
+        if(_appUtils==null) {
+            _appUtils=new AppUtils(context);
+            Log.e("Unity","初始化App工具类AppUtils");
+        }
+        return _appUtils;
+    }
+
 
     public  void ShowToast(String str){
         Log.d("Unity","Toast.show"+str);
@@ -34,6 +58,6 @@ public class AndroidInterface {
     }
 
     public  void Test(){
-        Log.d("Unity","测试test");
+        Log.d("Unity","测试test"+context);
     }
 }
